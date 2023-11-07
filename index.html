@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,
+body {
+    font-size: 10px;
+    font-family: 'lato', Arial, Helvetica, sans-serif;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #6bc1c1;
+    background-image: linear-gradient(315deg, #73a6e8 0%, #64d7a1 74%);
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 80vh;
+    text-align: center;
+    padding: 1.5rem;
+    justify-content: space-evenly;
+}
+.title { font-size: 3rem; }
+.row {
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(315deg, #89dbb9 0%, #cbcedb 74%);
+    height: 5rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+input { 
+    margin-right: 2rem; 
+}
+
+input,select {
+    font-size: 1.7rem;
+    border: none;
+    background: transparent;
+}
+#rate-detail {
+    font-size: 1.8rem;
+    border-bottom: 3px dotted #035d66;
+}
+.footer {
+    font-size: 1.2rem;
+    position: relative;
+    bottom: -2rem;
+    letter-spacing: 1px;
+}
+.footer > a { text-decoration: none; }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">Currency Converter</h1>
+        <div class="row">
+            <input type="number" name="currency-1" id="currency-1" step="any">
+            <select name="currency-1" id="select-currency-1">
+                <option value="EUR">EUR</option>
+                <option value="SAR">SAR</option>
+                <option value="CAD">CAD</option>
+                <option value="HKD">HKD</option>
+                <option value="ISK">ISK</option>
+                <option value="PHP">PHP</option>
+                <option value="DKK">DKK</option>
+                <option value="HUF">HUF</option>
+                <option value="CZK">CZK</option>
+                <option value="AUD">AUD</option>
+                <option value="RON">RON</option>
+                <option value="SEK">SEK</option>
+                <option value="IDR">IDR</option>
+                <option value="INR">INR</option>
+                <option value="PKR">PKR</option>
+                <option value="BRL">BRL</option>
+                <option value="RUB">RUB</option>
+                <option value="HRK">HRK</option>
+                <option value="JPY">JPY</option>
+                <option value="THB">THB</option>
+                <option value="CHF">CHF</option>
+                <option value="SGD">SGD</option>
+                <option value="PLN">PLN</option>
+                <option value="BGN">BGN</option>
+                <option value="TRY">TRY</option>
+                <option value="CNY">CNY</option>
+                <option value="NOK">NOK</option>
+                <option value="NZD">NZD</option>
+                <option value="ZAR">ZAR</option>
+                <option value="USD" selected>USD</option>
+                <option value="MXN">MXN</option>
+                <option value="ILS">ILS</option>
+                <option value="GBP">GBP</option>
+                <option value="KRW">KRW</option>
+                <option value="MYR">MYR</option>
+            </select>
+        </div>
+        <div class="row">
+            <input type="number" name="currency-2" id="currency-2" step="any">
+            <select name="currency-2" id="select-currency-2">
+                <option value="EUR">EUR</option>
+                <option value="SAR">SAR</option>
+                <option value="CAD">CAD</option>
+                <option value="HKD">HKD</option>
+                <option value="ISK">ISK</option>
+                <option value="PHP">PHP</option>
+                <option value="DKK">DKK</option>
+                <option value="HUF">HUF</option>
+                <option value="CZK">CZK</option>
+                <option value="AUD">AUD</option>
+                <option value="RON">RON</option>
+                <option value="SEK">SEK</option>
+                <option value="IDR">IDR</option>
+                <option value="INR" selected>INR</option>
+                <option value="PKR">PKR</option>
+                <option value="BRL">BRL</option>
+                <option value="RUB">RUB</option>
+                <option value="HRK">HRK</option>
+                <option value="JPY">JPY</option>
+                <option value="THB">THB</option>
+                <option value="CHF">CHF</option>
+                <option value="SGD">SGD</option>
+                <option value="PLN">PLN</option>
+                <option value="BGN">BGN</option>
+                <option value="TRY">TRY</option>
+                <option value="CNY">CNY</option>
+                <option value="NOK">NOK</option>
+                <option value="NZD">NZD</option>
+                <option value="ZAR">ZAR</option>
+                <option value="USD">USD</option>
+                <option value="MXN">MXN</option>
+                <option value="ILS">ILS</option>
+                <option value="GBP">GBP</option>
+                <option value="KRW">KRW</option>
+                <option value="MYR">MYR</option>
+            </select>
+        </div>
+        <div id="rate-detail"></div>
+    </div>
+    <p class="footer">This project is a part of <a href="https://60minutejs.vercel.app/">60 Minute javascript</a></p>
+
+
+    <script>
+        const currency1InputElem = document.getElementById('currency-1');
+        const selectCurrency1 = document.getElementById('select-currency-1');
+        const currency2InputElem = document.getElementById('currency-2');
+        const selectCurrency2 = document.getElementById('select-currency-2');
+        const rateDetail = document.getElementById('rate-detail');
+
+        calc();
+
+        function calc() {
+
+            const selectCurrency1value = selectCurrency1.value;
+            const selectCurrency2value = selectCurrency2.value;
+
+            fetch(`https://api.exchangerate-api.com/v4/latest/${selectCurrency1value}`)
+                .then(response => {
+                    //if promise wasn't resolved
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    const val = data.rates[selectCurrency2value];
+                    currency2InputElem.value = (currency1InputElem.value * val).toFixed(3);
+
+                    rateDetail.innerText = `1 ${selectCurrency1value} = ${val.toFixed(3)} ${selectCurrency2value}`;
+                })
+                .catch(error => {
+                    console.log('problem : ', error);
+                });
+        }
+
+        currency1InputElem.addEventListener('input', calc);
+        currency2InputElem.addEventListener('input', calc);
+
+        selectCurrency1.addEventListener('change', calc);
+        selectCurrency2.addEventListener('change', calc);
+    </script>
+
+
+</body>
+
+</html>
